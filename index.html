@@ -411,6 +411,71 @@
       .modal ul.feat svg { width: 16px; height: 16px; color: var(--accent); flex: none; margin-top: 4px; }
       .modal .proj-tech { margin: 4px 0 26px; }
 
+      /* ---------- Floating contact dock & AI assistant ---------- */
+      .dock {
+        position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+        z-index: 150; display: flex; flex-direction: column; gap: 12px; align-items: flex-end;
+      }
+      .dock-btn {
+        display: inline-flex; align-items: center; gap: 10px; border: none;
+        height: 56px; border-radius: 999px; padding: 0 19px 0 15px;
+        font-family: var(--font-display); font-weight: 700; font-size: 14.5px;
+        box-shadow: 0 14px 32px -10px rgba(0,0,0,0.55);
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+      }
+      .dock-btn svg { width: 27px; height: 27px; flex: none; }
+      .dock-btn:hover { transform: translateY(-2px); }
+      .dock-btn:active { transform: scale(0.96); }
+      .dock-btn .db-label { white-space: nowrap; }
+      .dock-wa { background: #25d366; color: #052e1b; }
+      .dock-wa:hover { box-shadow: 0 18px 38px -10px rgba(37, 211, 102, 0.55); }
+      .dock-bot { background: var(--accent-grad); color: #1a0d02; position: relative; }
+      .dock-bot:hover { box-shadow: 0 18px 38px -10px rgba(255, 110, 26, 0.6); }
+      .dock-badge {
+        position: absolute; top: -4px; right: -2px; width: 20px; height: 20px; border-radius: 50%;
+        background: #ef4444; color: #fff; font-family: var(--font-body); font-size: 11px; font-weight: 800;
+        display: grid; place-items: center; border: 2px solid var(--bg);
+      }
+      .chat-panel {
+        position: fixed; right: 20px; bottom: calc(94px + env(safe-area-inset-bottom, 0px));
+        z-index: 160; width: min(384px, calc(100vw - 32px));
+        height: min(580px, calc(100dvh - 150px));
+        background: var(--panel-2); border: 1px solid var(--line-strong); border-radius: 20px;
+        box-shadow: 0 34px 70px -20px rgba(0,0,0,0.8);
+        display: none; flex-direction: column; overflow: hidden;
+      }
+      .chat-panel.open { display: flex; animation: modalIn 0.22s ease; }
+      .chat-head { display: flex; align-items: center; gap: 12px; padding: 15px 16px; border-bottom: 1px solid var(--line); background: rgba(255,255,255,0.02); }
+      .chat-avatar { width: 42px; height: 42px; border-radius: 12px; background: var(--accent-grad); color: #1a0d02; display: grid; place-items: center; flex: none; }
+      .chat-avatar svg { width: 23px; height: 23px; }
+      .chat-head b { display: block; font-family: var(--font-display); font-size: 15.5px; line-height: 1.25; }
+      .chat-head small { color: #4ade80; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+      .chat-head small::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #4ade80; flex: none; }
+      .chat-close { margin-left: auto; width: 36px; height: 36px; flex: none; border-radius: 50%; border: 1px solid var(--line); background: var(--panel); color: var(--text); display: grid; place-items: center; }
+      .chat-close svg { width: 15px; height: 15px; }
+      .chat-msgs { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; -webkit-overflow-scrolling: touch; }
+      .msg { max-width: 86%; padding: 10px 13px; border-radius: 14px; font-size: 14.5px; line-height: 1.55; }
+      .msg.bot { background: rgba(255,255,255,0.06); border: 1px solid var(--line); align-self: flex-start; border-bottom-left-radius: 4px; }
+      .msg.user { background: var(--accent-grad); color: #1a0d02; font-weight: 600; align-self: flex-end; border-bottom-right-radius: 4px; }
+      .msg a { color: var(--accent-2); font-weight: 700; text-decoration: underline; }
+      .msg.typing { display: inline-flex; gap: 5px; align-items: center; padding: 14px 15px; }
+      .msg.typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); animation: typingBlink 1.1s infinite; }
+      .msg.typing i:nth-child(2) { animation-delay: 0.18s; }
+      .msg.typing i:nth-child(3) { animation-delay: 0.36s; }
+      @keyframes typingBlink { 0%, 60%, 100% { opacity: 0.25; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-2px); } }
+      .chat-chips { display: flex; gap: 8px; padding: 2px 16px 12px; flex-wrap: wrap; }
+      .chip { border: 1px solid var(--line-strong); background: var(--accent-soft); color: var(--accent-2); border-radius: 999px; padding: 8px 13px; font-size: 13px; font-weight: 700; min-height: 36px; font-family: var(--font-body); }
+      .chip:hover { background: rgba(255,122,26,0.22); }
+      .chat-form { display: flex; gap: 9px; padding: 12px; border-top: 1px solid var(--line); background: rgba(255,255,255,0.02); }
+      .chat-form input { flex: 1; min-width: 0; background: rgba(255,255,255,0.04); border: 1px solid var(--line); border-radius: 11px; padding: 12px 14px; color: var(--text); font-family: var(--font-body); font-size: 15px; }
+      .chat-form input::placeholder { color: var(--muted-2); }
+      .chat-form input:focus { border-color: var(--accent); outline: none; }
+      .chat-send { width: 46px; height: 46px; flex: none; border: none; border-radius: 11px; background: var(--accent-grad); color: #1a0d02; display: grid; place-items: center; }
+      .chat-send svg { width: 19px; height: 19px; }
+      .chat-wa { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 11px; font-size: 13.5px; font-weight: 700; color: #4ade80; border-top: 1px solid var(--line); }
+      .chat-wa svg { width: 16px; height: 16px; flex: none; }
+      .chat-wa:hover { background: rgba(37, 211, 102, 0.08); }
+
       .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.65s ease, transform 0.65s ease; }
       .reveal.in { opacity: 1; transform: none; }
       .reveal.d1 { transition-delay: 0.08s; } .reveal.d2 { transition-delay: 0.16s; } .reveal.d3 { transition-delay: 0.24s; }
@@ -497,6 +562,11 @@
         .footer-grid { grid-template-columns: 1fr; gap: 32px; }
         .footer-bottom { flex-direction: column; gap: 4px; }
         .send-alt a { flex: 1; justify-content: center; min-height: 44px; }
+        .dock { right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+        .dock-btn { width: 54px; height: 54px; padding: 0; justify-content: center; }
+        .dock-btn svg { width: 26px; height: 26px; }
+        .dock-btn .db-label { display: none; }
+        .chat-panel { right: 16px; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); height: min(540px, calc(100dvh - 110px)); }
         .strip-track { gap: 36px; }
         .strip-track span { gap: 36px; font-size: 13.5px; }
       }
@@ -1219,6 +1289,48 @@
       </div>
     </div>
 
+    <!-- FLOATING CONTACT DOCK -->
+    <div class="dock">
+      <button class="dock-btn dock-bot" id="botBtn" type="button" aria-label="Chat with the AI assistant" aria-expanded="false" aria-controls="chatPanel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+        <span class="db-label">AI Assistant</span>
+        <span class="dock-badge" id="botBadge">1</span>
+      </button>
+      <a class="dock-btn dock-wa" id="waDock" href="#" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        <span class="db-label">WhatsApp</span>
+      </a>
+    </div>
+
+    <!-- AI ASSISTANT CHAT PANEL -->
+    <div class="chat-panel" id="chatPanel" role="dialog" aria-label="AI assistant chat">
+      <div class="chat-head">
+        <span class="chat-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span>
+        <span><b>AI Assistant</b><small>Online — replies instantly</small></span>
+        <button class="chat-close" id="chatClose" type="button" aria-label="Close chat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <div class="chat-msgs" id="chatMsgs" aria-live="polite"></div>
+      <div class="chat-chips" id="chatChips">
+        <button class="chip" type="button">What services do you offer?</button>
+        <button class="chip" type="button">How much does a website cost?</button>
+        <button class="chip" type="button">Do you build mobile apps?</button>
+        <button class="chip" type="button">Can you do SEO for my site?</button>
+        <button class="chip" type="button">Talk to a human</button>
+      </div>
+      <form class="chat-form" id="chatForm">
+        <input id="chatInput" type="text" placeholder="Type your question…" autocomplete="off" aria-label="Type your question" />
+        <button class="chat-send" type="submit" aria-label="Send message">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+        </button>
+      </form>
+      <a class="chat-wa" id="waChat" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        Prefer a person? Chat on WhatsApp
+      </a>
+    </div>
+
     <script>
       /* ============================================================
          EDITABLE CONFIG — change these to your real details.
@@ -1467,6 +1579,124 @@
             '<a href="' + waText + '" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>Send via WhatsApp</a>' +
             "</div>";
         }, 900);
+      });
+
+      /* ---------- floating dock: WhatsApp deep links ---------- */
+      ["waDock", "waChat"].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.href = waLink;
+      });
+
+      /* ---------- AI assistant chat ---------- */
+      var botBtn = document.getElementById("botBtn");
+      var botBadge = document.getElementById("botBadge");
+      var chatPanel = document.getElementById("chatPanel");
+      var chatMsgs = document.getElementById("chatMsgs");
+      var chatForm = document.getElementById("chatForm");
+      var chatInput = document.getElementById("chatInput");
+      var chatOpened = false;
+
+      function scrollChat() { chatMsgs.scrollTop = chatMsgs.scrollHeight; }
+      function addMsg(text, who, isHtml) {
+        var d = document.createElement("div");
+        d.className = "msg " + who;
+        if (isHtml) { d.innerHTML = text; } else { d.textContent = text; }
+        chatMsgs.appendChild(d);
+        scrollChat();
+        return d;
+      }
+      function botReply(raw) {
+        var t = " " + raw.toLowerCase() + " ";
+        function has() {
+          for (var i = 0; i < arguments.length; i++) { if (t.indexOf(arguments[i]) !== -1) return true; }
+          return false;
+        }
+        var wa = '<a href="' + waLink + '" target="_blank" rel="noopener">WhatsApp</a>';
+        var form = '<a href="#contact">project form</a>';
+        if (has("price", "cost", "charge", "rate", "quote", "budget", "how much", "expensive", "cheap")) {
+          return "Honest answer: the price depends on the scope — a landing page, a full web app and an AI automation are very different builds, so there is no single fixed price. Share a few details in the " + form + " or on " + wa + " and you will get a clear estimate with a timeline — the first conversation is free.";
+        }
+        if (has(" app ", " apps", "android", "ios", "iphone", "mobile", "play store", "app store")) {
+          return "Yes — app development is one of the core services here. Android and iOS apps (business apps, customer apps and internal tools) are built from one codebase and can connect to the same backend as your website, so everything stays in sync. Tell me what the app needs to do, here or on " + wa + ", and I will suggest the most cost-effective way to build it.";
+        }
+        if (has("seo", "google", "rank", "ranking", "search engine", "traffic")) {
+          return "Yes — SEO optimization is offered: a full SEO audit, keyword research, on-page optimization (titles, headings, content, internal links) and technical fixes (speed, mobile-friendliness, indexing, sitemaps), delivered with a clear report. Just send your website link on " + wa + " or through the " + form + " to get started. One honest note: SEO results build over weeks and months — nobody can truthfully promise a #1 ranking overnight.";
+        }
+        if (has("chatbot", "chat bot", "bot")) {
+          return "AI chatbots are a specialty here — customer support bots and business assistants for your website or WhatsApp that answer customers instantly and hand over to a human when a conversation needs one. Want one for your business? Share the details in the " + form + " or on " + wa + ".";
+        }
+        if (has("agent", "automat", "workflow", "n8n", "integrat")) {
+          return "Yes — custom AI agents and workflow automation are core services. Agents connect to your real tools (store, CRM, inbox, databases) to look up information and complete multi-step tasks, and automations built with n8n, APIs and webhooks make leads, invoices, notifications and reports handle themselves. Tell me your most repetitive task and I will tell you honestly whether it can be automated.";
+        }
+        if (has("website", "web site", "web app", "landing", "ecommerce", "e-commerce", "store", "shop", "dashboard", "saas", "software", "develop", "build")) {
+          return "Full-stack web development covers business websites, landing pages, e-commerce stores, dashboards, SaaS platforms and custom web applications — responsive, fast and built on a modern stack (React / Next.js) so they grow with your business. The process is simple: Discovery, Strategy, Development, then Launch & Support. Start with the " + form + " or say hello on " + wa + ".";
+        }
+        if (has("service", "offer", "what do you do", "what can you", "help with")) {
+          return "Here is what Enterprise911 offers: (1) Full-Stack Web Development, (2) App Development for Android & iOS, (3) AI Chatbot Development, (4) AI Agent Development, (5) Workflow Automation, (6) AI Integration, (7) SEO Optimization, and (8) Custom Software Solutions. Which one are you interested in?";
+        }
+        if (has("human", "person", "call", "phone", "number", "contact", "email", "talk to", "whatsapp")) {
+          return "Of course — you can reach the developer directly on " + wa + " (" + CONFIG.whatsappNumber.replace(/^92/, "+92 ") + ") or by email at " + CONFIG.email + ". Serious inquiries get a personal reply.";
+        }
+        if (has("long", "time", "deadline", "duration", "fast", "when")) {
+          return "Timelines depend on the size of the project — a simple website is much faster than a custom app or AI system. After a short discovery chat you get a clear plan and timeline before any code is written. Share your deadline in the " + form + " or on " + wa + " and you will get an honest estimate.";
+        }
+        if (has("portfolio", "project", "work", "example", "demo")) {
+          return 'You can see demo projects right on this page — an AI Customer Support Agent, a Business Workflow Automation, an AI-Powered Web Application, an Intelligent WhatsApp Chatbot, a Custom AI Assistant and a Full-Stack Business Dashboard. Scroll to the <a href="#projects">Projects section</a> and tap "View Project" on any of them.';
+        }
+        if (has("who are you", "your name", "about you", "about enterprise")) {
+          return "I am the AI assistant for Enterprise911 — a one-developer studio for full-stack web development, app development, AI agents, automation and SEO. You work directly with the person who designs, builds and automates your system — no hand-offs between agencies. Ask me anything about the services, or reach the developer on " + wa + ".";
+        }
+        if (has("hi", "hello", "hey", "salam", "aoa", "assalam")) {
+          return "Hello! Great to see you here. I can answer questions about websites, mobile apps, AI chatbots, automation and SEO — or tap one of the topics below. What are you looking to build?";
+        }
+        if (has("thank", "shukria", "great", "nice", "awesome")) {
+          return "You are welcome! If you would like to take the next step, the " + form + " takes two minutes — or just say hello on " + wa + ". The first conversation is free.";
+        }
+        return "I can help with questions about the services here — web development, app development, AI chatbots and agents, workflow automation, SEO, timelines and pricing. For anything detailed or specific to your project, the fastest route is " + wa + " or the " + form + " — the first conversation is free.";
+      }
+      function askBot(text) {
+        addMsg(text, "user", false);
+        var typing = document.createElement("div");
+        typing.className = "msg bot typing";
+        typing.innerHTML = "<i></i><i></i><i></i>";
+        chatMsgs.appendChild(typing);
+        scrollChat();
+        setTimeout(function () {
+          typing.remove();
+          addMsg(botReply(text), "bot", true);
+        }, 750);
+      }
+      function openChat() {
+        chatPanel.classList.add("open");
+        botBtn.setAttribute("aria-expanded", "true");
+        if (botBadge) botBadge.style.display = "none";
+        if (!chatOpened) {
+          chatOpened = true;
+          addMsg("Hi! I am the Enterprise911 AI assistant. Ask me about websites, mobile apps, AI chatbots, automation or SEO — or tap a topic below and I will answer right away.", "bot", false);
+        }
+        if (window.innerWidth > 620) chatInput.focus();
+      }
+      function closeChat() {
+        chatPanel.classList.remove("open");
+        botBtn.setAttribute("aria-expanded", "false");
+      }
+      botBtn.addEventListener("click", function () {
+        if (chatPanel.classList.contains("open")) { closeChat(); } else { openChat(); }
+      });
+      document.getElementById("chatClose").addEventListener("click", closeChat);
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeChat(); });
+      chatForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var v = chatInput.value.trim();
+        if (!v) return;
+        chatInput.value = "";
+        askBot(v);
+      });
+      document.querySelectorAll("#chatChips .chip").forEach(function (chip) {
+        chip.addEventListener("click", function () { askBot(chip.textContent.trim()); });
+      });
+      chatMsgs.addEventListener("click", function (e) {
+        if (e.target.closest('a[href="#contact"]') || e.target.closest('a[href="#projects"]')) closeChat();
       });
     </script>
   </body>
