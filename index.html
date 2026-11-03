@@ -413,11 +413,12 @@
 
       /* ---------- Floating contact dock & AI assistant ---------- */
       .dock {
-        position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px));
-        z-index: 150; display: flex; flex-direction: column; gap: 12px; align-items: flex-end;
+        position: fixed; left: 20px; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+        z-index: 150; display: flex; flex-direction: row; justify-content: space-between; align-items: flex-end;
+        pointer-events: none;
       }
       .dock-btn {
-        display: inline-flex; align-items: center; gap: 10px; border: none;
+        display: inline-flex; align-items: center; gap: 10px; border: none; pointer-events: auto;
         height: 56px; border-radius: 999px; padding: 0 19px 0 15px;
         font-family: var(--font-display); font-weight: 700; font-size: 14.5px;
         box-shadow: 0 14px 32px -10px rgba(0,0,0,0.55);
@@ -437,7 +438,7 @@
         display: grid; place-items: center; border: 2px solid var(--bg);
       }
       .chat-panel {
-        position: fixed; right: 20px; bottom: calc(94px + env(safe-area-inset-bottom, 0px));
+        position: fixed; left: 20px; bottom: calc(94px + env(safe-area-inset-bottom, 0px));
         z-index: 160; width: min(384px, calc(100vw - 32px));
         height: min(580px, calc(100dvh - 150px));
         background: var(--panel-2); border: 1px solid var(--line-strong); border-radius: 20px;
@@ -562,11 +563,11 @@
         .footer-grid { grid-template-columns: 1fr; gap: 32px; }
         .footer-bottom { flex-direction: column; gap: 4px; }
         .send-alt a { flex: 1; justify-content: center; min-height: 44px; }
-        .dock { right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+        .dock { left: 16px; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
         .dock-btn { width: 54px; height: 54px; padding: 0; justify-content: center; }
         .dock-btn svg { width: 26px; height: 26px; }
         .dock-btn .db-label { display: none; }
-        .chat-panel { right: 16px; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); height: min(540px, calc(100dvh - 110px)); }
+        .chat-panel { left: 16px; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); height: min(540px, calc(100dvh - 110px)); }
         .strip-track { gap: 36px; }
         .strip-track span { gap: 36px; font-size: 13.5px; }
       }
